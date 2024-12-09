@@ -26,7 +26,7 @@ Ananda Rasyid Putra Santoso               (5025231130)
 
 5. Diagram Class
    
-    Ma
+    ![image](https://github.com/Rasyid637/File1/blob/main/DiagramClassFpPBO.png)
 
 7. Desain UI
 
