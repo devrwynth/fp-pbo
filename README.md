@@ -30,9 +30,17 @@ Ananda Rasyid Putra Santoso               (5025231130)
 
 7. Desain UI
 
-    Ma
+   Title Screen
+   
+   ![WhatsApp Image 2024-12-10 at 06 09 33_3f44b0e1](https://github.com/user-attachments/assets/44396654-bc8e-4ebb-be48-5398f2586a5b)
 
-8. Coding Implementasi
+   In-Game
+   
+   ![WhatsApp Image 2024-12-10 at 06 33 31_dd3e2adc](https://github.com/user-attachments/assets/81ad396e-9fa3-4214-9790-9f560d491bad)
+
+
+
+9. Coding Implementasi
    
 (langsung di blogger, nanti aku kasih full html)
 
