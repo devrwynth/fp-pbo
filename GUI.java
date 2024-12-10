@@ -1,6 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class GUI extends JFrame {
     private Game game;
@@ -10,6 +14,16 @@ public class GUI extends JFrame {
     private JLabel healthPotionLabel;
     private JLabel staminaPotionLabel;
     private boolean[][] visited;
+
+    //UI Variables
+    Color lsBGColor = new Color(31,30,34);
+    Color lsTitleColor = new Color(255,255,255);
+    Color lsButtonBorderColor = Color.BLUE;
+    Color lsButtonFillColor = new Color(255,255,255);
+    Color lvBGColor = new Color(31,30,34);
+    Color lvTextColor = new Color(255,255,255);
+    int lsButtonBorderThickness = 2;
+    int lsTitleBottomBorderThickness = 2;
 
     public GUI(Game game) {
         this.game = game;
@@ -32,20 +46,64 @@ public class GUI extends JFrame {
         JPanel levelPanel = new JPanel();
         levelPanel.setLayout(new BoxLayout(levelPanel, BoxLayout.Y_AXIS));
 
-        JLabel title = new JLabel("Select Level", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 24));
+        // UI STYLE
+        levelPanel.setBackground(lsBGColor);
+
+        //Add LevelSelect Art
+        BufferedImage myPicture;
+        JLabel picLabel = new JLabel();
+        try {
+            myPicture = ImageIO.read(new File("assets/mqaLevelSelect.png"));
+            picLabel = new JLabel(new ImageIcon(myPicture));
+        } catch (IOException e) {
+            picLabel.setText("MazeQuest Adventure");
+        }
+        
+        picLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        picLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+        levelPanel.add(picLabel);
+
+        //Add title
+        JLabel name = new JLabel("MazeQuest Adventure", SwingConstants.CENTER);
+        name.setFont(new Font("Arial", Font.BOLD, 24));
+
+        name.setAlignmentX(CENTER_ALIGNMENT);
+        name.setForeground(lsTitleColor);
+
+        levelPanel.add(name);
+
+        JLabel title = new JLabel("Level Select", SwingConstants.CENTER);
+        title.setFont(new Font("Arial", Font.BOLD, 16));
+
+        title.setAlignmentX(CENTER_ALIGNMENT);
+        title.setForeground(lsTitleColor);
+        title.setBorder(BorderFactory.createMatteBorder(0, 0, lsTitleBottomBorderThickness, 0, lsButtonBorderColor));
+        
         levelPanel.add(title);
+
+        JPanel levelBtnPanel = new JPanel();
+        levelBtnPanel.setAlignmentX(CENTER_ALIGNMENT);
+
+        levelBtnPanel.setBackground(lsBGColor);
 
         for (int i = 1; i <= 5; i++) {
             int level = i;
             JButton levelButton = new JButton("Level " + i);
-            levelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            //BUTTON UI
+            levelButton.setBorder(BorderFactory.createLineBorder(lsButtonBorderColor,lsButtonBorderThickness));
+            levelButton.setBackground(lsButtonFillColor);
+
+            //levelButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             levelButton.addActionListener(e -> startGame(level));
-            levelPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-            levelPanel.add(levelButton);
+            //levelPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            levelBtnPanel.add(levelButton);
         }
 
+        levelPanel.add(levelBtnPanel);
+
         getContentPane().removeAll();
+
         getContentPane().add(levelPanel);
         revalidate();
         repaint();
@@ -63,16 +121,64 @@ public class GUI extends JFrame {
         healthPotionLabel = new JLabel("Health Potions: " + game.getCharacter().getInventory().getHealthPotionCount());
         staminaPotionLabel = new JLabel("Stamina Potions: " + game.getCharacter().getInventory().getStaminaPotionCount());
 
+        //Font Color
+        hpLabel.setForeground(lvTextColor);
+        staminaLabel.setForeground(lvTextColor);
+        healthPotionLabel.setForeground(lvTextColor);
+        staminaPotionLabel.setForeground(lvTextColor);
+
+        //Heart and Stamina Image
+        BufferedImage heartImage;
+        JLabel heartLabel = new JLabel();
+        try {
+            heartImage = ImageIO.read(new File("assets/mqaHeart.png"));
+            heartLabel = new JLabel(new ImageIcon(heartImage));
+        } catch (IOException e) {
+            heartLabel.setText("");
+        }
+        
+        heartLabel.setPreferredSize(new Dimension(16,16));
+
+        BufferedImage arrowImage;
+        JLabel arrowLabel = new JLabel();
+        try {
+            arrowImage = ImageIO.read(new File("assets/mqaStamina.png"));
+            arrowLabel = new JLabel(new ImageIcon(arrowImage));
+        } catch (IOException e) {
+            arrowLabel.setText("");
+        }
+        arrowLabel.setPreferredSize(new Dimension(16,16));
+    
+
         updateMaze();
 
-        JPanel infoPanel = new JPanel(new GridLayout(2, 2));
-        infoPanel.add(hpLabel);
-        infoPanel.add(staminaLabel);
+        JPanel hpPanel = new JPanel();
+        JPanel staminaPanel = new JPanel();
+        hpPanel.setBackground(lvBGColor);
+        staminaPanel.setBackground(lvBGColor);
+        
+        hpPanel.add(heartLabel);
+        hpPanel.add(hpLabel);
+        staminaPanel.add(arrowLabel);
+        staminaPanel.add(staminaLabel);
 
-        JPanel potionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel infoPanel = new JPanel(new GridLayout(2, 2));
+        infoPanel.setBackground(lvBGColor);
+        infoPanel.add(hpPanel);
+        infoPanel.add(staminaPanel);
+
+        JPanel potionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JButton useHealthPotionButton = new JButton("Use Health Potion");
         JButton useStaminaPotionButton = new JButton("Use Stamina Potion");
 
+        //potionPanel and Button Color Setup
+        potionPanel.setBackground(lvBGColor);
+        useHealthPotionButton.setBorder(BorderFactory.createLineBorder(lsButtonBorderColor,lsButtonBorderThickness));
+        useStaminaPotionButton.setBorder(BorderFactory.createLineBorder(lsButtonBorderColor,lsButtonBorderThickness));
+        useHealthPotionButton.setBackground(lsButtonFillColor);
+        useStaminaPotionButton.setBackground(lsButtonFillColor);
+        
+        //
         useHealthPotionButton.setPreferredSize(new Dimension(150, 20)); // Change button size
         useStaminaPotionButton.setPreferredSize(new Dimension(150, 20)); // Change button size
 
@@ -92,11 +198,21 @@ public class GUI extends JFrame {
         helpButton.addActionListener(e -> showHelpDialog());
         helpPanel.add(helpButton);
 
+        // Help components Colors
+        helpPanel.setBackground(lvBGColor);
+        helpButton.setBorder(BorderFactory.createLineBorder(lsButtonBorderColor,lsButtonBorderThickness));
+        helpButton.setBackground(lsButtonFillColor);
+
         JPanel combinedPanel = new JPanel();
         combinedPanel.setLayout(new BoxLayout(combinedPanel, BoxLayout.Y_AXIS));
         combinedPanel.add(helpPanel);
         combinedPanel.add(infoPanel);
         combinedPanel.add(potionPanel);
+
+        //combinedPanel colors
+        combinedPanel.setBackground(lvBGColor);
+        mazePanel.setBackground(lvBGColor);
+
 
         getContentPane().removeAll();
         getContentPane().setLayout(new BorderLayout());
