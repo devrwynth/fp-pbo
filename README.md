@@ -25,8 +25,7 @@ Ananda Rasyid Putra Santoso               (5025231130)
     MazeQuest Adventure dirancang untuk menghibur sekaligus mengasah kemampuan pemain dalam berpikir strategis dan mengelola sumber daya. Game ini memberikan pengalaman seru bagi pemain yang suka tantangan, dengan kombinasi eksplorasi, manajemen stamina, dan penghindaran jebakan. Selain itu, MazeQuest Adventure juga dapat melatih pengambilan keputusan di bawah tekanan dan memperkuat keterampilan pemecahan masalah, menjadikannya bukan hanya sekadar hiburan, tetapi juga sarana pengembangan keterampilan berpikir kritis.
 
 5. Diagram Class
-   
-    Ma
+   ![image](https://github.com/Rasyid637/File1/blob/main/DiagramClassFpPBO.png)
 
 7. Desain UI
 
